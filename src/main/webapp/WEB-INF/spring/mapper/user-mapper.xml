@@ -11,9 +11,24 @@
 		WHERE username =#{username}
 	</select>
 	<select id="select_auths" resultType="AuthorityVO">
-		SELECT * FORM tbl_authorities WHERE username = #{username}
+		SELECT * FRoM tbl_authorities WHERE username = #{username}
 	</select>
-	<insert id="insert"></insert>
+   <insert id="insert" parameterType="UserVO">
+      INSERT INTO tbl_users(
+      username,
+      password,
+      enabled,
+      realname,
+      nickname
+      )
+      VALUES(
+      #{username},
+      #{password},
+      #{enabled},
+      #{realname},
+      #{nickname}
+      )
+   </insert>
 	<update id="update"></update>
 	<delete id="delete"></delete>
 	<select id="create_user_table">

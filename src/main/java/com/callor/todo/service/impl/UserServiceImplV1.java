@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.callor.todo.model.AuthorityVO;
 import com.callor.todo.model.UserVO;
+import com.callor.todo.persistance.TodoDao;
 import com.callor.todo.persistance.UserDao;
 import com.callor.todo.service.UserService;
 
@@ -17,10 +18,19 @@ public class UserServiceImplV1 implements UserService{
 	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
+	private TodoDao todoDao;
+	
+	//자동실행 하기 (꼼수)
 	@Bean
 	public void create_table() {
 		userDao.create_user_table();
 		userDao.create_auth_table();
+		todoDao.create_todo_table();
+	}
+	
+	public void create_todo_table() {
+		
 	}
 	
 	@Override
