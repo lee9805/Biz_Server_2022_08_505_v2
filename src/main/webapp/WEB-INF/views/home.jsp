@@ -63,7 +63,7 @@ nav a {
 	margin: 5px 0;
 	padding: 0 12px;
 	border-bottom: 3px solid transparent;
-	transition: 1s;
+	transition: 0.6s;
 }
 
 nav a:hover {
@@ -98,7 +98,7 @@ article.welcome {
 </head>
 <body>
 	<header>
-		<h1>반갑습니다</h1>
+		<h1>TODO LIST</h1>
 	</header>
 	<nav>
 		<ul>
