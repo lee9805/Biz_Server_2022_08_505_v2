@@ -37,14 +37,14 @@ body {
 header {
 	padding: 2rem;
 	color: white;
-	background: green;
+	background: #75a4bf;
 	display: flex;
 	justify-content: center;
 	align-item: center;
 }
 
 nav {
-	background-color: blue;
+	background-color: #4d2d28;
 	color: white;
 }
 
@@ -112,7 +112,7 @@ article.welcome {
 			</sec:authorize>
 
 			<sec:authorize access="isAuthenticated()">
-				<li><a href="${rootPath}/">로그아웃</a></li>
+				<li><a href="${rootPath}/logout">로그아웃</a></li>
 				<li><a href="${rootPath}/user/mypage">myPage</a></li>
 			</sec:authorize>
 		</ul>

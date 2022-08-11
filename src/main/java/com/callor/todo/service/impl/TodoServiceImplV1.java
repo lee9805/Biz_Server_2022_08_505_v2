@@ -1,6 +1,8 @@
 package com.callor.todo.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -44,9 +46,7 @@ public class TodoServiceImplV1 implements TodoService {
 		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat timeForm = new SimpleDateFormat("HH:mm:SS");
 		vo.setT_sdate(dateForm.format(date));
-		vo.setT_stime(dateForm.format(date));
-		
-
+		vo.setT_stime(timeForm.format(date));
 		return todoDao.insert(vo);
 	}
 
@@ -65,6 +65,43 @@ public class TodoServiceImplV1 implements TodoService {
 	public void create_todo_table() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int todoComp(String t_seq) {
+		
+		long seq = 0L;
+		try {
+			seq = Long.valueOf(t_seq);
+		} catch (Exception e) {
+			return -1;
+		}
+		TodoVO todoVO = todoDao.findById(seq);
+		if(todoVO == null) {
+			return -1;
+		}
+		String edate = todoVO.getT_edate();
+		if(edate == null || edate.isEmpty()) {
+			
+			//java 1.8  이상에서 사용하는 새로운 날짜 시간 클래스
+			LocalDateTime dateTime =LocalDateTime.now();
+			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:SS");
+			
+			todoVO.setT_edate(dateTime.format(dateFormat));
+			todoVO.setT_etime(dateTime.format(timeFormat));
+		} else {
+			todoVO.setT_edate("");
+			todoVO.setT_etime("");
+		}
+		/*
+		 * VO 의 변수가 boolean type 일경우
+		 * set method는 일반적인 setter method pattern 를 따르는데
+		 * get mthod는  is변수명()  형태의 pattern으로 변경된다
+		 */
+		todoVO.setT_complete(!todoVO.isT_complete());
+		int ret = todoDao.update(todoVO);
+		return ret;
 	}
 
 }

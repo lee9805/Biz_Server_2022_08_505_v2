@@ -36,10 +36,10 @@
 		)
 	</insert>
 	<update id="update">
-		UPDATE tbl_todoList Set
-		t_content = #{t_content},
-		t_edate = #{edate},
-		t_etime = #{t_time}
+		UPDATE tbl_todoList 
+		Set t_content = #{t_content},
+			t_edate = #{t_edate},
+			t_etime = #{t_etime}
 		WHERE t_seq = #{t_seq}
 	</update>
 	<delete id="delete"></delete>

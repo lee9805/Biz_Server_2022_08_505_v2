@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.callor.todo.model.TodoVO;
 import com.callor.todo.service.TodoService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping(value="/todo")
 public class TodoController {
@@ -72,12 +75,19 @@ public class TodoController {
 		TodoVO todoVO = todoService.findById(l_seq);
 		model.addAttribute("TODO",todoVO);
 		model.addAttribute("LAYOUT","TODO_LIST");
-		return"todo/insert";
+		return"home";
 	}
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public String update(TodoVO todoVO , Model model) {
+		
+		log.debug("수신된 데이터 {}", todoVO);
 		todoService.update(todoVO);
 		return "redirect:/todo";
 	}
-	
+	@RequestMapping(value="/comp" , method=RequestMethod.GET)
+	public String comp(String t_seq, Model model) {
+		
+		int ret = todoService.todoComp(t_seq);
+		return "redirect:/todo";
+	}
 }

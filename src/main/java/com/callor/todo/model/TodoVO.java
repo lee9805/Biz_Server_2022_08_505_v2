@@ -1,7 +1,5 @@
 package com.callor.todo.model;
 
-import org.springframework.stereotype.Service;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +23,7 @@ public class TodoVO {
 	private String t_edate;
 	private String t_etime;
 	
+	//boolean type 의 기본은 false 라는 것을 확인
+	private boolean t_complete;
 
 }

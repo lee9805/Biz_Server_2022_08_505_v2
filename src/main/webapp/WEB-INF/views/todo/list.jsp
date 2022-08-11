@@ -14,6 +14,10 @@
 	div.todo_content {
 		cursor: pointer;
 	}
+	div.complete {
+		text-decoration: black line-through wavy ;
+		color: blue;
+	}
 </style>
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -22,9 +26,14 @@ document.addEventListener("DOMContentLoaded",()=>{
         const target =e.target
         if(target.tagName == "DIV" && target.classList?.contains("todo_content")) {
         	const seq = target.dataset.seq
+        	if(!seq) {
+        		alert("완료후 수정 불가")
+        		return false
+        	}
         	document.location.href = "${rootPath}/todo/update?t_seq=" + seq
         } else if(target.tagName == "SPAN" && target.classList?.contains("todo_content")) {
-        	const seq = target.dataset.seq
+        	const parentDiv = target.closest("DIV")
+        	const seq = parentDiv?.dataset.seq
         	document.location.href = "${rootPath}/todo/comp?t_seq=" + seq
         }
     })
@@ -37,11 +46,26 @@ document.addEventListener("DOMContentLoaded",()=>{
 		</h1>
 		<c:forEach items="${TODOS}" var="TODO">
 			<div
-				data-seq="${TODO.t_seq}" 
+				<c:if test='${ empty TODO.t_edate}'>data-seq="${TODO.t_seq}"</c:if>
 				title=" 시작: ${TODO.t_sdate}, ${TODO.t_stime}" 
-				class="todo_content w3-border w3-padding-16 w3-margin w3-tooltip">
+				class="todo_content w3-border w3-padding-16 w3-margin w3-tooltip
+				<c:if test='${not empty TODO.t_edate}'>complete</c:if>">
 				${TODO.t_content}
-				<span class="todo_content w3-text" data-seq="${TODO.t_seq}">( 시작 : ${TODO.t_sdate} ${TODO.t_stime})</span>
+				<span class="todo_content w3-text" >
+					시작 (${TODO.t_sdate} ${TODO.t_stime})
+				</span>
+				
+				<c:if test="${ not empty TODO.t_edate}">
+					<span class="todo_content">완료</span>(
+					<span class="todo_content">${TODO.t_edate}</span>
+					<span class="todo_content">${TODO.t_etime}</span>)
+				</c:if>
+				
+				<c:if test="${TODO.t_complete}">
+					<span>완료</span>
+					<span>${TODO.t_edate}</span>
+					<span>${TODO.t_etime}</span>
+				</c:if>
 				</div>
 		</c:forEach>
 		<form:form >
